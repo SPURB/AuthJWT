@@ -60,6 +60,9 @@ namespace WebApi.Services
             if (string.IsNullOrWhiteSpace(password))
                 throw new AppException("Faltou a senha");
 
+            if (!Enum.IsDefined(typeof(PerfilEnum), user.Perfil))
+                throw new AppException("Perfil inexistente");
+
             if (_context.Users.Any(x => x.Login == user.Login))
                 throw new AppException("Usuario \"" + user.Login + "\" ja existe");
 
@@ -68,6 +71,8 @@ namespace WebApi.Services
 
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
+
+            user.Perfil = (PerfilEnum)user.Perfil;
 
             _context.Users.Add(user);
             _context.SaveChanges();

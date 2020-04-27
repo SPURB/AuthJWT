@@ -64,6 +64,7 @@ namespace WebApi.Controllers
                 Nome = user.Nome,
                 Email = user.Email,
                 Login = user.Login,
+                Perfil = user.Perfil,
                 Token = tokenString
             });
         }
@@ -102,6 +103,14 @@ namespace WebApi.Controllers
             var user = _userService.GetById(id);
             var model = _mapper.Map<UserModel>(user);
             return Ok(model);
+        }
+
+        [HttpGet]
+        public PerfilEnum GetAuthUserPerfil(){
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.ReadJwtToken(Request.Headers["Authorize"]);
+            var user = _userService.GetById(int.Parse(token.Subject));
+            return (PerfilEnum)user.Perfil;
         }
 
         [HttpPut("{id}")]

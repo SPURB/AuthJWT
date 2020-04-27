@@ -1,3 +1,5 @@
+using WebApi.Helpers;
+
 namespace WebApi.Entities
 {
     public class User
@@ -8,5 +10,6 @@ namespace WebApi.Entities
         public string Login { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
+        public PerfilEnum Perfil { get; set; }
     }
 }

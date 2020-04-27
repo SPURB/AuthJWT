@@ -33,7 +33,8 @@ namespace WebApi
             if (_env.IsProduction())
                 services.AddDbContext<DataContext>();
             else
-                services.AddDbContext<DataContext, SqliteDataContext>();
+                //services.AddDbContext<DataContext, SqliteDataContext>();
+                services.AddDbContext<DataContext>();
 
             services.AddCors();
             services.AddControllers();
