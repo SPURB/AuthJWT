@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Controllers",
+    "\\Entities",
+    "\\Helpers",
+    "\\Migrations",
+    "\\Migrations\\SqlServerMigrations",
+    "\\Models",
+    "\\Models\\Users",
+    "\\Services"
+  ],
+  "SelectedNode": "\\appsettings.Development.json",
+  "PreviewInSolutionExplorer": false
+}
