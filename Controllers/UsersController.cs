@@ -45,13 +45,15 @@ namespace WebApi.Controllers
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            var userRole = (int)user.Perfil;
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.Id.ToString())
+                    new Claim(ClaimTypes.Name, user.Id.ToString()),
+                    new Claim(ClaimTypes.Role, userRole.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddDays(7),
+                Expires = DateTime.UtcNow.AddDays(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
@@ -105,11 +107,10 @@ namespace WebApi.Controllers
             return Ok(model);
         }
 
-        [HttpGet]
-        public PerfilEnum GetAuthUserPerfil(){
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var token = tokenHandler.ReadJwtToken(Request.Headers["Authorize"]);
-            var user = _userService.GetById(int.Parse(token.Subject));
+
+        [HttpGet("perfil")]
+        public IActionResult GetPerfil(){
+            var user = _userService.GetById(int.Parse(User.Identity.Name));
             return (PerfilEnum)user.Perfil;
         }
 
