@@ -38,7 +38,7 @@ namespace WebApi.Controllers
         [HttpPost("auth")]
         public IActionResult Authenticate([FromBody]AuthenticateModel model)
         {
-            var user = _userService.Authenticate(model.Username, model.Password);
+            var user = _userService.Authenticate(model.Login, model.Password);
 
             if (user == null)
                 return BadRequest(new { message = "Usuario ou senha incorreto" });
@@ -53,7 +53,7 @@ namespace WebApi.Controllers
                     new Claim(ClaimTypes.Name, user.Id.ToString()),
                     new Claim(ClaimTypes.Role, userRole.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddDays(1),
+                Expires = DateTime.UtcNow.AddHours(8),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
@@ -109,7 +109,7 @@ namespace WebApi.Controllers
 
 
         [HttpGet("perfil")]
-        public IActionResult GetPerfil(){
+        public PerfilEnum GetPerfil(){
             var user = _userService.GetById(int.Parse(User.Identity.Name));
             return (PerfilEnum)user.Perfil;
         }

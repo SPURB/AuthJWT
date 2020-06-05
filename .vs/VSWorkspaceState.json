@@ -3,10 +3,11 @@
     "",
     "\\Controllers",
     "\\Entities",
+    "\\Helpers",
     "\\Migrations",
+    "\\Models",
     "\\Models\\Users",
     "\\Services"
   ],
-  "SelectedNode": "\\Services\\UserService.cs",
   "PreviewInSolutionExplorer": false
 }
